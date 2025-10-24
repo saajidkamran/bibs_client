@@ -4,20 +4,33 @@ import ItemForm from "../forms/ItemForm";
 import Button from "../common/Button";
 import { generateId } from "../../data/utils";
 import { initialDataStore, MASTER_TYPES } from "../../data/mockData";
-import { Pencil, Trash2 } from "lucide-react";
-import type { Metal } from "../types";
+import { CheckCircle, Pencil, Trash2, XCircle } from "lucide-react";
+import type { Item, Metal } from "../types";
 
 const ItemMaster: React.FC = () => {
-  const [items, setItems] = useState(initialDataStore.items);
+  const [items, setItems] = useState<Item[]>(initialDataStore.items as Item[]);
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [isFormOpen, setFormOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredItems = items.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleToggleStatus = (id: string) => {
+    setItems((prevItems) =>
+      prevItems.map((i) =>
+        i.id === id ? { ...i, isActive: !i.isActive } : i
+      )
+    );
+  };
 
   const handleAdd = () => {
     setSelectedItem(null);
     setFormOpen(true);
   };
 
-  const handleEdit = (item: any) => {
+  const handleEdit = (item: Item) => {
     setSelectedItem(item);
     setFormOpen(true);
   };
@@ -40,7 +53,12 @@ const ItemMaster: React.FC = () => {
   };
 
   return (
-    <MasterDataScreen title="Item Master" onAdd={handleAdd} totalCount={items.length}>
+    <MasterDataScreen
+      title="Item Master"
+      onAdd={handleAdd}
+      searchTerm={searchTerm}
+      onSearchChange={setSearchTerm}
+    >
       {/* Item List */}
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
@@ -53,7 +71,7 @@ const ItemMaster: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {items.map((item) => (
+            {filteredItems.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50">
                 <td className="px-3 py-2 text-sm">{item.name}</td>
                 <td className="px-3 py-2 text-sm">
@@ -65,12 +83,14 @@ const ItemMaster: React.FC = () => {
                     .filter(Boolean)
                     .join(", ")}
                 </td>
-                <td className="px-3 py-2 text-sm">
-                  {item.isActive ? (
-                    <span className="text-green-600 font-semibold">Active</span>
-                  ) : (
-                    <span className="text-gray-400">Inactive</span>
-                  )}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium cursor-pointer transition duration-150 ${item.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                    onClick={() => handleToggleStatus(item.id)}
+                  >
+                    {item.isActive ? <CheckCircle className="w-3 h-3 mr-1" /> : <XCircle className="w-3 h-3 mr-1" />}
+                    {item.isActive ? 'Active' : 'Inactive'}
+                  </span>
                 </td>
                 <td className="px-3 py-2 text-right space-x-2">
                   <Button variant="icon" icon={Pencil} onClick={() => handleEdit(item)} />
