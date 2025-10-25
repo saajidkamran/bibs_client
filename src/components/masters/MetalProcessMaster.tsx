@@ -3,20 +3,33 @@ import MasterDataScreen from "./MasterDataScreen";
 import SimpleMasterForm from "../forms/SimpleMasterForm";
 import Button from "../common/Button";
 import { generateId } from "../../data/utils";
-import { initialDataStore } from "../../data/mockData";
-import { Pencil, Trash2 } from "lucide-react";
+import { initialDataStore, type MetalProcess } from "../../data/mockData";
+import { CheckCircle, Pencil, Trash2, XCircle } from "lucide-react";
 
 const MetalProcessMaster: React.FC = () => {
   const [metalProcesses, setMetalProcesses] = useState(initialDataStore.metal_processes);
   const [selectedProcess, setSelectedProcess] = useState<any | null>(null);
   const [isFormOpen, setFormOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredItems = metalProcesses.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleToggleStatus = (id: string) => {
+    setMetalProcesses((prevItems) =>
+      prevItems.map((i) =>
+        i.id === id ? { ...i, isActive: !i.isActive } : i
+      )
+    );
+  };
 
   const handleAdd = () => {
     setSelectedProcess(null);
     setFormOpen(true);
   };
 
-  const handleEdit = (process: any) => {
+  const handleEdit = (process: MetalProcess) => {
     setSelectedProcess(process);
     setFormOpen(true);
   };
@@ -45,7 +58,8 @@ const MetalProcessMaster: React.FC = () => {
     <MasterDataScreen
       title="Metal Process Master"
       onAdd={handleAdd}
-      totalCount={metalProcesses.length}
+      searchTerm={searchTerm}
+      onSearchChange={setSearchTerm}
     >
       {/* Table */}
       <div className="overflow-x-auto">
@@ -58,15 +72,17 @@ const MetalProcessMaster: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {metalProcesses.map((proc) => (
+            {filteredItems.map((proc) => (
               <tr key={proc.id} className="hover:bg-gray-50">
                 <td className="px-3 py-2 text-sm">{proc.name}</td>
-                <td className="px-3 py-2 text-sm">
-                  {proc.isActive ? (
-                    <span className="text-green-600 font-semibold">Active</span>
-                  ) : (
-                    <span className="text-gray-400">Inactive</span>
-                  )}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium cursor-pointer transition duration-150 ${proc.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                    onClick={() => handleToggleStatus(proc.id)}
+                  >
+                    {proc.isActive ? <CheckCircle className="w-3 h-3 mr-1" /> : <XCircle className="w-3 h-3 mr-1" />}
+                    {proc.isActive ? 'Active' : 'Inactive'}
+                  </span>
                 </td>
                 <td className="px-3 py-2 text-right space-x-2">
                   <Button variant="icon" icon={Pencil} onClick={() => handleEdit(proc)} />

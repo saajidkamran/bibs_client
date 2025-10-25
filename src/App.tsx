@@ -8,6 +8,7 @@ import ProcessTypeMaster from "./components/masters/ProcessTypeMaster";
 import MetalProcessMaster from "./components/masters/MetalProcessMaster";
 import EmployeeMaster from "./components/masters/EmployeeMaster";
 import { initialDataStore } from "./data/mockData";
+import CompanyInfoPage from "./components/pages/CompanyInfoPage";
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState("DASHBOARD");
@@ -25,7 +26,8 @@ const App: React.FC = () => {
             </p>
           </div>
         );
-
+      case "COMPANY_INFO":
+        return <CompanyInfoPage />;
       case "POS_WIP":
         return <POSScreen data={initialDataStore} />;
 
