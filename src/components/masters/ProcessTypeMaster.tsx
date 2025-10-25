@@ -4,19 +4,33 @@ import SimpleMasterForm from '../forms/SimpleMasterForm';
 import Button from '../common/Button';
 import { generateId } from '../../data/utils';
 import { initialDataStore } from '../../data/mockData';
-import { Pencil, Trash2 } from 'lucide-react';
+import { CheckCircle, Pencil, Trash2, XCircle } from 'lucide-react';
+import type { ProcessType } from '../types';
 
 const ProcessTypeMaster: React.FC = () => {
   const [processTypes, setProcessTypes] = useState(initialDataStore.process_types);
   const [selectedType, setSelectedType] = useState<any | null>(null);
   const [isFormOpen, setFormOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredItems = processTypes.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleToggleStatus = (id: string) => {
+    setProcessTypes((prevItems) =>
+      prevItems.map((i) =>
+        i.id === id ? { ...i, isActive: !i.isActive } : i
+      )
+    );
+  };
 
   const handleAdd = () => {
     setSelectedType(null);
     setFormOpen(true);
   };
 
-  const handleEdit = (type: any) => {
+  const handleEdit = (type: ProcessType) => {
     setSelectedType(type);
     setFormOpen(true);
   };
@@ -45,7 +59,8 @@ const ProcessTypeMaster: React.FC = () => {
     <MasterDataScreen
       title="Process Type Master"
       onAdd={handleAdd}
-      totalCount={processTypes.length}
+      searchTerm={searchTerm}
+      onSearchChange={setSearchTerm}
     >
       {/* Table */}
       <div className="overflow-x-auto">
@@ -58,15 +73,17 @@ const ProcessTypeMaster: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {processTypes.map((type) => (
+            {filteredItems.map((type) => (
               <tr key={type.id} className="hover:bg-gray-50">
                 <td className="px-3 py-2 text-sm">{type.name}</td>
-                <td className="px-3 py-2 text-sm">
-                  {type.isActive ? (
-                    <span className="text-green-600 font-semibold">Active</span>
-                  ) : (
-                    <span className="text-gray-400">Inactive</span>
-                  )}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium cursor-pointer transition duration-150 ${type.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                    onClick={() => handleToggleStatus(type.id)}
+                  >
+                    {type.isActive ? <CheckCircle className="w-3 h-3 mr-1" /> : <XCircle className="w-3 h-3 mr-1" />}
+                    {type.isActive ? 'Active' : 'Inactive'}
+                  </span>
                 </td>
                 <td className="px-3 py-2 text-right space-x-2">
                   <Button
