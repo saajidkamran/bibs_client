@@ -40,6 +40,7 @@ const MAIN_MENU_ITEMS = [
   { name: "Employee Management", icon: User, screen: "EMPLOYEE_MASTER" },
   { name: "Point of Sale (POS)", icon: Clock, screen: "POS_WIP" },
   { name: "Reports & Analytics", icon: List, screen: "REPORTS_WIP" },
+  { name: "Vat Management", icon: List, screen: "VAT_MANAGER" },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ currentScreen, setScreen }) => {

@@ -5,7 +5,7 @@ import Button from "../common/Button";
 import { generateId } from "../../data/utils";
 import { initialDataStore, MASTER_TYPES } from "../../data/mockData";
 import { CheckCircle, Pencil, Trash2, XCircle } from "lucide-react";
-import type { Item, Metal } from "../types";
+import type { Item, Metal } from "../types/types";
 
 const ItemMaster: React.FC = () => {
   const [items, setItems] = useState<Item[]>(initialDataStore.items as Item[]);
