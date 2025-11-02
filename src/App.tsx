@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import Sidebar from "./components/layout/Sidebar";
-import POSScreen from "./components/pos/POSScreen";
 import ItemMaster from "./components/masters/ItemMaster";
 import MetalMaster from "./components/masters/MetalMaster";
 import ProcessMaster from "./components/masters/ProcessMaster";
 import ProcessTypeMaster from "./components/masters/ProcessTypeMaster";
 import MetalProcessMaster from "./components/masters/MetalProcessMaster";
 import EmployeeMaster from "./components/masters/EmployeeMaster";
-import { initialDataStore } from "./data/mockData";
+import { PosMainScreen } from "./components/pos/PosMainScreen";
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState("DASHBOARD");
+  console.log("🚀 ~ App ~ currentScreen:", currentScreen)
 
   const renderContent = () => {
     switch (currentScreen) {
@@ -27,7 +27,7 @@ const App: React.FC = () => {
         );
 
       case "POS_WIP":
-        return <POSScreen data={initialDataStore} />;
+        return <PosMainScreen />;
 
       case "ITEM_MASTER":
         return <ItemMaster />;
