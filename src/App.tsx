@@ -7,6 +7,7 @@ import ProcessTypeMaster from "./components/masters/ProcessTypeMaster";
 import MetalProcessMaster from "./components/masters/MetalProcessMaster";
 import EmployeeMaster from "./components/masters/EmployeeMaster";
 import { PosMainScreen } from "./components/pos/PosMainScreen";
+import VatManager from "./components/vat/VatManager";
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState("DASHBOARD");
@@ -17,9 +18,7 @@ const App: React.FC = () => {
       case "DASHBOARD":
         return (
           <div className="p-6">
-            <h1 className="text-2xl font-semibold text-gray-800">
-              Welcome to JewelWorks ERP 💎
-            </h1>
+            <h1 className="text-2xl font-semibold text-gray-800">Welcome to JewelWorks ERP 💎</h1>
             <p className="mt-2 text-gray-600">
               Use the sidebar to navigate between modules like POS and Masters.
             </p>
@@ -46,6 +45,8 @@ const App: React.FC = () => {
 
       case "EMPLOYEE_MASTER":
         return <EmployeeMaster />;
+      case "VAT_MANAGER":
+        return <VatManager />;
 
       default:
         return null;

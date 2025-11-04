@@ -5,7 +5,7 @@ import Button from '../common/Button';
 import { generateId } from '../../data/utils';
 import { initialDataStore } from '../../data/mockData';
 import { CheckCircle, Pencil, Trash2, XCircle } from 'lucide-react';
-import type { ProcessType } from '../types';
+import type { ProcessType } from '../types/types';
 
 const ProcessTypeMaster: React.FC = () => {
   const [processTypes, setProcessTypes] = useState(initialDataStore.process_types);
