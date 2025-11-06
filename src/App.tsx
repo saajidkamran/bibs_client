@@ -8,6 +8,7 @@ import MetalProcessMaster from "./components/masters/MetalProcessMaster";
 import EmployeeMaster from "./components/masters/EmployeeMaster";
 import { PosMainScreen } from "./components/pos/PosMainScreen";
 import VatManager from "./components/vat/VatManager";
+import CompanyInfoPage from "./components/pages/CompanyInfoPage";
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState("DASHBOARD");
@@ -24,6 +25,9 @@ const App: React.FC = () => {
             </p>
           </div>
         );
+
+      case "COMPANY_INFO":
+        return <CompanyInfoPage />;
 
       case "POS_WIP":
         return <PosMainScreen />;
