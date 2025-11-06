@@ -9,6 +9,7 @@ import EmployeeMaster from "./components/masters/EmployeeMaster";
 import { PosMainScreen } from "./components/pos/PosMainScreen";
 import VatManager from "./components/vat/VatManager";
 import CompanyInfoPage from "./components/pages/CompanyInfoPage";
+import CustomerMaster from "./components/customers/CustomerMaster";
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState("DASHBOARD");
@@ -51,6 +52,10 @@ const App: React.FC = () => {
         return <EmployeeMaster />;
       case "VAT_MANAGER":
         return <VatManager />;
+      case "CUSTOMER_MASTER":
+        return <CustomerMaster />;
+      case "CUSTOMER_MASTER":
+        return <CustomerMaster />;
 
       default:
         return null;
