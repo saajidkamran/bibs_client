@@ -14,7 +14,6 @@ import {
   Lock,
   Layers,
   Zap,
-  Briefcase,
 } from "lucide-react";
 import Button from "../common/Button";
 
@@ -39,7 +38,7 @@ const MAIN_MENU_ITEMS = [
   },
   { name: "Employee Management", icon: User, screen: "EMPLOYEE_MASTER" },
   { name: "Point of Sale (POS)", icon: Clock, screen: "POS_WIP" },
-  { name: "Reports & Analytics", icon: List, screen: "REPORTS_WIP" },
+  { name: "Company Information", icon: List, screen: "COMPANY_INFO" },
   { name: "Vat Management", icon: List, screen: "VAT_MANAGER" },
 ];
 
@@ -74,17 +73,15 @@ const Sidebar: React.FC<SidebarProps> = ({ currentScreen, setScreen }) => {
         >
           <Icon className="w-5 h-5 shrink-0" />
           <span
-            className={`ml-4 text-sm font-medium whitespace-nowrap transition-opacity duration-300 ${
-              isExpanded ? "opacity-100" : "opacity-0 absolute left-full ml-4"
-            }`}
+            className={`ml-4 text-sm font-medium whitespace-nowrap transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0 absolute left-full ml-4"
+              }`}
           >
             {item.name}
           </span>
           {item.children && (
             <div
-              className={`ml-auto transition-transform duration-300 ${
-                isExpanded ? "opacity-100" : "opacity-0 absolute right-3"
-              }`}
+              className={`ml-auto transition-transform duration-300 ${isExpanded ? "opacity-100" : "opacity-0 absolute right-3"
+                }`}
             >
               {isExpanded &&
                 (isSubmenuOpen ? (
@@ -109,17 +106,15 @@ const Sidebar: React.FC<SidebarProps> = ({ currentScreen, setScreen }) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-full bg-white shadow-2xl transition-all duration-300 ease-in-out z-40 p-4 flex flex-col ${
-        isExpanded ? "w-64" : "w-20"
-      }`}
+      className={`fixed top-0 left-0 h-full bg-white shadow-2xl transition-all duration-300 ease-in-out z-40 p-4 flex flex-col ${isExpanded ? "w-64" : "w-20"
+        }`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {/* --- Top Section: Logo & Brand --- */}
       <div
-        className={`flex items-center py-4 mb-6 border-b border-gray-100 ${
-          isExpanded ? "justify-start" : "justify-center"
-        }`}
+        className={`flex items-center py-4 mb-6 border-b border-gray-100 ${isExpanded ? "justify-start" : "justify-center"
+          }`}
       >
         <Gem className={`w-8 h-8 text-indigo-600 shrink-0 ${isExpanded ? "mr-3" : ""}`} />
         {isExpanded && (
